@@ -6,6 +6,7 @@ public class move : MonoBehaviour {
 
     //se sustituye en lugar de la velocidad
     public float forceValue;
+    public float jumpValue;
 
     //variable para uso de la fisica en cuerpos rigidos
     private Rigidbody rigidBody;
@@ -26,6 +27,14 @@ public class move : MonoBehaviour {
        /* transform.Translate (Input.GetAxis("Horizontal")*speed*Time.deltaTime,
                             0,
                             Input.GetAxis("Vertical")*speed*Time.deltaTime);*/
+
+        //haremos saltar nuestra esfera
+        //se usa get button down para detectar el boton solamente cuando es presionado, solo la primera vez
+        //se usa jump porque esta mapeado como la spacebar, comprobamos que este en reposo y que no pueda saltar dos veces
+        if(Input.GetButtonDown("Jump") && Mathf.Abs(rigidBody.velocity.y) < 0.01f)
+            //añadimos una fuerza al cuerpo en el vector 3, es decir en y, y le aplicamos un valor de salto, como segundo parametro
+            //agregamos una fuerza para adquirir una velocidad instantanea
+            rigidBody.AddForce(Vector3.up * jumpValue, ForceMode.Impulse);
 	
 	}
 
@@ -34,7 +43,7 @@ public class move : MonoBehaviour {
         //aplica una fuerza a la esfera, aplica fuerza en base al tecleo de las flechas, fuerza constante
         //debe ser codigo optimizado
 
-        //al cuerpo que tenemos le agregamos una fuerza en un vector de 3 ejes, se mueve en horizontal en x y en vertical en y
+        //al cuerpo que tenemos le agregamos una fuerza en un vector de 3 ejes, se mueve en horizontal en x y en vertical en z
         rigidBody.AddForce(new Vector3(Input.GetAxis("Horizontal"),
                             0,
                             Input.GetAxis("Vertical")));
