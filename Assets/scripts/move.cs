@@ -42,7 +42,7 @@ public class move : MonoBehaviour {
             rigidBody.AddForce(Vector3.up * jumpValue, ForceMode.Impulse);
             //reproduccion del audio
             audioJump.Play();
-    }	
+        }	
 	}
 
     //se ejecuta en un tiempo regular, por ejemplo 50 veces por segundo, tiene codigo sincronizado con el motor fisico
@@ -53,8 +53,13 @@ public class move : MonoBehaviour {
         //al cuerpo que tenemos le agregamos una fuerza en un vector de 3 ejes, se mueve en horizontal en x y en vertical en z
         rigidBody.AddForce(new Vector3(Input.GetAxis("Horizontal"),
                             0,
-                            Input.GetAxis("Vertical")));
-        
+                            Input.GetAxis("Vertical")) * forceValue);
+
+        //uso del acelerometro en los ejes x, y
+        rigidBody.AddForce(new Vector3(Input.acceleration.x,
+                            0,
+                            Input.acceleration.y) * forceValue);
+
     }
 
 
